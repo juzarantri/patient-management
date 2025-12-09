@@ -1,0 +1,707 @@
+{
+    "info": {
+        "name": "Patient Management API",
+        "description": "Complete API collection for Patient Management System with Cognito authentication",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Health & Welcome",
+            "item": [
+                {
+                    "name": "Welcome",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                ""
+                            ]
+                        },
+                        "description": "Get welcome message and API version"
+                    },
+                    "response": [
+                        {
+                            "name": "Welcome Response",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        ""
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"message\": \"Welcome to Patient Management API\",\n  \"status\": \"Server is running successfully\",\n  \"version\": \"1.0.0\",\n  \"endpoints\": {\n    \"health\": \"GET /health\",\n    \"patients\": \"GET /api/patients\",\n    \"createPatient\": \"POST /api/patients\",\n    \"getPatient\": \"GET /api/patients/:patientId\",\n    \"updatePatient\": \"PUT /api/patients/:patientId\",\n    \"deletePatient\": \"DELETE /api/patients/:patientId\",\n    \"searchByAddress\": \"GET /api/patients/search/address?address=...\",\n    \"searchByCondition\": \"GET /api/patients/search/condition?condition=...\",\n    \"batchGet\": \"POST /api/patients/batch\"\n  }\n}\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/health",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "health"
+                            ]
+                        },
+                        "description": "Check if the API is running"
+                    },
+                    "response": [
+                        {
+                            "name": "Health Check Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/health",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "health"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"status\": \"healthy\"\n}\n"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Patients - CRUD Operations",
+            "item": [
+                {
+                    "name": "Create Patient",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{cognito_token}}",
+                                "description": "Valid Cognito JWT token (REQUIRED)"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"John Doe\",\n  \"address\": \"123 Main St, New York, NY 10001\",\n  \"conditions\": [\"Diabetes\", \"Hypertension\"],\n  \"allergies\": [\"Penicillin\", \"Shellfish\"]\n}\n"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/patients",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "patients"
+                            ]
+                        },
+                        "description": "Create a new patient (PROTECTED - Requires Cognito JWT token)"
+                    },
+                    "response": [
+                        {
+                            "name": "Patient Created Successfully",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{cognito_token}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"name\": \"John Doe\",\n  \"address\": \"123 Main St, New York, NY 10001\",\n  \"conditions\": [\"Diabetes\", \"Hypertension\"],\n  \"allergies\": [\"Penicillin\", \"Shellfish\"]\n}\n"
+                                },
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/patients",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "patients"
+                                    ]
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"success\": true,\n  \"data\": {\n    \"patientId\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"John Doe\",\n    \"address\": \"123 Main St, New York, NY 10001\",\n    \"conditions\": [\"Diabetes\", \"Hypertension\"],\n    \"allergies\": [\"Penicillin\", \"Shellfish\"],\n    \"createdAt\": \"2025-12-08T10:30:00.000Z\",\n    \"updatedAt\": \"2025-12-08T10:30:00.000Z\"\n  },\n  \"timestamp\": \"2025-12-08T10:30:00.000Z\"\n}\n"
+                        },
+                        {
+                            "name": "Missing Required Fields",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{cognito_token}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"name\": \"Jane Doe\"\n}\n"
+                                },
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/patients",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "patients"
+                                    ]
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"success\": false,\n  \"error\": \"Name and address are required\",\n  \"timestamp\": \"2025-12-08T10:30:00.000Z\"\n}\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "List All Patients",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/patients?limit=50",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "patients"
+                            ],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "50",
+                                    "description": "Number of results to return (default: 50)"
+                                },
+                                {
+                                    "key": "lastKey",
+                                    "value": "",
+                                    "disabled": true,
+                                    "description": "Pagination token for next page results"
+                                }
+                            ]
+                        },
+                        "description": "List all patients with pagination (PUBLIC - No authentication required)"
+                    },
+                    "response": [
+                        {
+                            "name": "Patients List Success",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/patients?limit=50",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "patients"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "limit",
+                                            "value": "50"
+                                        }
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"success\": true,\n  \"data\": {\n    \"items\": [\n      {\n        \"patientId\": \"550e8400-e29b-41d4-a716-446655440000\",\n        \"name\": \"John Doe\",\n        \"address\": \"123 Main St, New York, NY 10001\",\n        \"conditions\": [\"Diabetes\", \"Hypertension\"],\n        \"allergies\": [\"Penicillin\", \"Shellfish\"],\n        \"createdAt\": \"2025-12-08T10:30:00.000Z\",\n        \"updatedAt\": \"2025-12-08T10:30:00.000Z\"\n      },\n      {\n        \"patientId\": \"550e8400-e29b-41d4-a716-446655440001\",\n        \"name\": \"Jane Smith\",\n        \"address\": \"456 Oak Ave, Los Angeles, CA 90001\",\n        \"conditions\": [\"Asthma\"],\n        \"allergies\": [\"Latex\"],\n        \"createdAt\": \"2025-12-08T10:31:00.000Z\",\n        \"updatedAt\": \"2025-12-08T10:31:00.000Z\"\n      }\n    ],\n    \"lastKey\": null\n  },\n  \"timestamp\": \"2025-12-08T10:32:00.000Z\"\n}\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "Get Patient by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/patients/550e8400-e29b-41d4-a716-446655440000",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "patients",
+                                "550e8400-e29b-41d4-a716-446655440000"
+                            ]
+                        },
+                        "description": "Get a specific patient by their ID (PUBLIC - No authentication required)"
+                    },
+                    "response": [
+                        {
+                            "name": "Patient Found",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/patients/550e8400-e29b-41d4-a716-446655440000",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "patients",
+                                        "550e8400-e29b-41d4-a716-446655440000"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"success\": true,\n  \"data\": {\n    \"patientId\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"John Doe\",\n    \"address\": \"123 Main St, New York, NY 10001\",\n    \"conditions\": [\"Diabetes\", \"Hypertension\"],\n    \"allergies\": [\"Penicillin\", \"Shellfish\"],\n    \"createdAt\": \"2025-12-08T10:30:00.000Z\",\n    \"updatedAt\": \"2025-12-08T10:30:00.000Z\"\n  },\n  \"timestamp\": \"2025-12-08T10:32:00.000Z\"\n}\n"
+                        },
+                        {
+                            "name": "Patient Not Found",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/patients/invalid-id",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "patients",
+                                        "invalid-id"
+                                    ]
+                                }
+                            },
+                            "status": "Not Found",
+                            "code": 404,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"success\": false,\n  \"error\": \"Patient not found\",\n  \"timestamp\": \"2025-12-08T10:32:00.000Z\"\n}\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "Update Patient",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{cognito_token}}",
+                                "description": "Valid Cognito JWT token (REQUIRED)"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"John Doe Updated\",\n  \"conditions\": [\"Diabetes\", \"Hypertension\", \"Arthritis\"],\n  \"allergies\": [\"Penicillin\", \"Shellfish\", \"Nuts\"]\n}\n"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/patients/550e8400-e29b-41d4-a716-446655440000",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "patients",
+                                "550e8400-e29b-41d4-a716-446655440000"
+                            ]
+                        },
+                        "description": "Update an existing patient (PROTECTED - Requires Cognito JWT token)"
+                    },
+                    "response": [
+                        {
+                            "name": "Patient Updated Successfully",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{cognito_token}}"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"name\": \"John Doe Updated\",\n  \"conditions\": [\"Diabetes\", \"Hypertension\", \"Arthritis\"],\n  \"allergies\": [\"Penicillin\", \"Shellfish\", \"Nuts\"]\n}\n"
+                                },
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/patients/550e8400-e29b-41d4-a716-446655440000",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "patients",
+                                        "550e8400-e29b-41d4-a716-446655440000"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"success\": true,\n  \"data\": {\n    \"patientId\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"John Doe Updated\",\n    \"address\": \"123 Main St, New York, NY 10001\",\n    \"conditions\": [\"Diabetes\", \"Hypertension\", \"Arthritis\"],\n    \"allergies\": [\"Penicillin\", \"Shellfish\", \"Nuts\"],\n    \"createdAt\": \"2025-12-08T10:30:00.000Z\",\n    \"updatedAt\": \"2025-12-08T10:32:30.000Z\"\n  },\n  \"timestamp\": \"2025-12-08T10:32:30.000Z\"\n}\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete Patient",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{cognito_token}}",
+                                "description": "Valid Cognito JWT token (REQUIRED)"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/patients/550e8400-e29b-41d4-a716-446655440000",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "patients",
+                                "550e8400-e29b-41d4-a716-446655440000"
+                            ]
+                        },
+                        "description": "Delete a patient (PROTECTED - Requires Cognito JWT token)"
+                    },
+                    "response": [
+                        {
+                            "name": "Patient Deleted Successfully",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{cognito_token}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/patients/550e8400-e29b-41d4-a716-446655440000",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "patients",
+                                        "550e8400-e29b-41d4-a716-446655440000"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"success\": true,\n  \"data\": {\n    \"patientId\": \"550e8400-e29b-41d4-a716-446655440000\"\n  },\n  \"timestamp\": \"2025-12-08T10:32:30.000Z\"\n}\n"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Patients - Search Operations",
+            "item": [
+                {
+                    "name": "Search Patients by Address",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/patients/search/address?address=New York",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "patients",
+                                "search",
+                                "address"
+                            ],
+                            "query": [
+                                {
+                                    "key": "address",
+                                    "value": "New York",
+                                    "description": "Address to search for"
+                                }
+                            ]
+                        },
+                        "description": "Find patients by address (PUBLIC - No authentication required)"
+                    },
+                    "response": [
+                        {
+                            "name": "Patients Found by Address",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/patients/search/address?address=New York",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "patients",
+                                        "search",
+                                        "address"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "address",
+                                            "value": "New York"
+                                        }
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"patientId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"name\": \"John Doe\",\n      \"address\": \"123 Main St, New York, NY 10001\",\n      \"conditions\": [\"Diabetes\", \"Hypertension\"],\n      \"allergies\": [\"Penicillin\", \"Shellfish\"],\n      \"createdAt\": \"2025-12-08T10:30:00.000Z\",\n      \"updatedAt\": \"2025-12-08T10:30:00.000Z\"\n    },\n    {\n      \"patientId\": \"550e8400-e29b-41d4-a716-446655440003\",\n      \"name\": \"Bob Wilson\",\n      \"address\": \"789 Pine Ln, New York, NY 10002\",\n      \"conditions\": [\"Thyroid\"],\n      \"allergies\": [\"Iodine\"],\n      \"createdAt\": \"2025-12-08T10:33:00.000Z\",\n      \"updatedAt\": \"2025-12-08T10:33:00.000Z\"\n    }\n  ],\n  \"timestamp\": \"2025-12-08T10:33:15.000Z\"\n}\n"
+                        },
+                        {
+                            "name": "No Address Parameter",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/patients/search/address",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "patients",
+                                        "search",
+                                        "address"
+                                    ]
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"success\": false,\n  \"error\": \"Address query parameter is required\",\n  \"timestamp\": \"2025-12-08T10:33:15.000Z\"\n}\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "Search Patients by Condition",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/patients/search/condition?condition=Diabetes",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "patients",
+                                "search",
+                                "condition"
+                            ],
+                            "query": [
+                                {
+                                    "key": "condition",
+                                    "value": "Diabetes",
+                                    "description": "Condition to search for"
+                                }
+                            ]
+                        },
+                        "description": "Find patients by medical condition (PUBLIC - No authentication required)"
+                    },
+                    "response": [
+                        {
+                            "name": "Patients Found by Condition",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/patients/search/condition?condition=Diabetes",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "patients",
+                                        "search",
+                                        "condition"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "condition",
+                                            "value": "Diabetes"
+                                        }
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"patientId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"name\": \"John Doe\",\n      \"address\": \"123 Main St, New York, NY 10001\",\n      \"conditions\": [\"Diabetes\", \"Hypertension\"],\n      \"allergies\": [\"Penicillin\", \"Shellfish\"],\n      \"createdAt\": \"2025-12-08T10:30:00.000Z\",\n      \"updatedAt\": \"2025-12-08T10:30:00.000Z\"\n    }\n  ],\n  \"timestamp\": \"2025-12-08T10:33:30.000Z\"\n}\n"
+                        },
+                        {
+                            "name": "No Condition Parameter",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/patients/search/condition",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "patients",
+                                        "search",
+                                        "condition"
+                                    ]
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"success\": false,\n  \"error\": \"Condition query parameter is required\",\n  \"timestamp\": \"2025-12-08T10:33:30.000Z\"\n}\n"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000",
+            "type": "string",
+            "description": "Base URL of the API server"
+        },
+        {
+            "key": "cognito_token",
+            "value": "",
+            "type": "string",
+            "description": "Cognito JWT token - Get this by running: npm run auth <username> <password>"
+        }
+    ]
+}

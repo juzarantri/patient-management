@@ -1,0 +1,35 @@
+{
+  "name": "patient-management",
+  "version": "1.0.0",
+  "description": "Patient Management System built with Node.js, Express, and TypeScript",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "nodemon --exec \"ts-node -r tsconfig-paths/register src/index.ts\"",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "auth": "ts-node -r tsconfig-paths/register src/utils/cognitoAuth.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.10.1",
+    "@types/uuid": "^10.0.0",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.946.0",
+    "@aws-sdk/credential-provider-node": "^3.946.0",
+    "@aws-sdk/lib-dynamodb": "^3.946.0",
+    "@opensearch-project/opensearch": "^2.4.0",
+    "aws-jwt-verify": "^5.1.1",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "uuid": "^13.0.0"
+  }
+}
