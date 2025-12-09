@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Request logging middleware for development
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((req: Request, _res: Response, next: NextFunction) => {
   console.log(`${req.method} ${req.path}`);
   next();
 });
@@ -44,7 +44,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
  */
 
 // Basic route
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (_req: Request, res: Response) => {
   res.json({
     message: "Welcome to Patient Management API",
     status: "Server is running successfully",
@@ -64,7 +64,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // Health check endpoint
-app.get("/health", (req: Request, res: Response) => {
+app.get("/health", (_req: Request, res: Response) => {
   res.status(200).json({
     status: "OK",
     timestamp: new Date().toISOString(),
@@ -91,7 +91,7 @@ app.use((req: Request, res: Response) => {
 });
 
 // Global error handling middleware
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error("Error:", err);
   res.status(500).json({
     success: false,

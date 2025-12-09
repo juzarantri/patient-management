@@ -64,10 +64,10 @@ export const authMiddleware = async (
 
     // Attach user information to request object
     req.user = {
+      ...claims,
       sub: claims.sub,
       username: claims.username,
       email: claims.email as string,
-      ...claims,
     };
 
     next();

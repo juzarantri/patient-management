@@ -63,7 +63,7 @@ async function authenticate(): Promise<void> {
     let authParams = `USERNAME=${USERNAME},PASSWORD=${PASSWORD}`;
 
     // Add SECRET_HASH
-    const secretHash = generateSecretHash(USERNAME, CLIENT_ID, CLIENT_SECRET);
+    const secretHash = generateSecretHash(USERNAME, CLIENT_ID!, CLIENT_SECRET!);
     authParams += `,SECRET_HASH=${secretHash}`;
 
     // Build AWS CLI command

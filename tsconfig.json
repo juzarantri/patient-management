@@ -22,13 +22,13 @@
     "forceConsistentCasingInFileNames": true,
 
     /* Type Checking */
-    // "strict": true,
-    // "noImplicitAny": true,
-    // "strictNullChecks": true,
-    // "strictFunctionTypes": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noImplicitReturns": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
 
     /* Completeness */
     "skipLibCheck": true
